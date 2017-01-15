@@ -64,7 +64,7 @@ local trainWordVec, testWordVec, valWordVec, decoder, decoder_, vocab
 trainWordVec, vocab, decoder = loadTextFileWords('./data/ptb.train.txt')
 testWordVec, vocab, decoder_ = loadTextFileWords('./data/ptb.test.txt', vocab)
 assert(#decoder == #decoder_) --no new words
-valWordVec, vocab, decoder_ = ('./data/ptb.valid.txt', vocab)
+valWordVec, vocab, decoder_ = loadTextFileWords('./data/ptb.valid.txt', vocab)
 assert(#decoder == #decoder_) --no new words
 data = {
   trainingData = trainWordVec,
