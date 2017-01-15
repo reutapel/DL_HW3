@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @reutapel
- Watch 5
-  Star 26
-  Fork 1 eladhoffer/recurrent.torch
- Code  Issues 1  Pull requests 1  Projects 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathrecurrent.torch/examples/language/wordRNN.lua
-465241b  on 21 Apr 2016
-@eladhoffer eladhoffer cudnn fixes
-1 contributor
-RawBlameHistory     
-152 lines (127 sloc)  6.48 KB
 require 'torch'
 require 'nn'
 require 'optim'
