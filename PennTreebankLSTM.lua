@@ -3,7 +3,7 @@ require 'nn'
 require 'optim'
 require 'eladtools'
 require 'recurrent'
-require 'examples.language.utils.textDataProvider'
+require 'recurrent.examples.language.utils.textDataProvider'
 -------------------------------------------------------
 
 cmd = torch.CmdLine()
