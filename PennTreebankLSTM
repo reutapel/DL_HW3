@@ -149,5 +149,3 @@ until stopTraining:update(LossVal)
 local lowestLoss, bestIteration = stopTraining:lowest()
 
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
