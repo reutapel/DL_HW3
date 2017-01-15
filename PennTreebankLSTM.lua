@@ -100,6 +100,10 @@ else
     modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 end
 
+w, dE_dw = modelConfig:getParameters()
+print('Number of parameters:', w:nElement())
+print(modelConfig)
+
 modelConfig.classifier:share(modelConfig.embedder, 'weight', 'gradWeight')
 local trainingConfig = require 'utils.trainRecurrent'
 local train = trainingConfig.train
