@@ -130,7 +130,7 @@ repeat
 
   local LossTest = evaluate(data.testData)
 
-  print('\nSampled Text:\n' .. sample('the meaning of life is', 50, true))
+  print('\nSampled Text:\n' .. sample('Buy low, sell high is the', 10, true))
 
   print('\nTest Perplexity: ' .. torch.exp(LossTest))
   log:add{['Training Loss']= LossTrain, ['Validation Loss'] = LossVal, ['Test Loss'] = LossTest}
