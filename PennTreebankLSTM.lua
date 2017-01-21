@@ -19,7 +19,7 @@ cmd:option('-shuffle',            false,                       'shuffle training
 cmd:text('===>Model And Training Regime')
 cmd:option('-model',              'LSTM',                      'Recurrent model [RNN, iRNN, LSTM, GRU]')
 cmd:option('-seqLength',          10,                          'number of timesteps to unroll for')
-cmd:option('-rnnSize',            220,                         'size of rnn hidden layer')
+cmd:option('-rnnSize',            128,                         'size of rnn hidden layer')
 cmd:option('-numLayers',          2,                           'number of layers in the LSTM')
 cmd:option('-dropout',            0,                           'dropout p value')
 cmd:option('-LR',                 2e-4,                        'learning rate')
@@ -88,6 +88,7 @@ else
     local rnn = rnnTypes[opt.model]
     local hiddenSize = opt.rnnSize
     modelConfig.recurrent = nn.Sequential()
+    modelConfig.recurrent:add(linear(1,hiddenSize))
     for i=1, opt.numLayers do
       modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
      -- modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
@@ -96,6 +97,7 @@ else
       end
       hiddenSize = opt.rnnSize
     end
+    modelConfig.recurrent:add(nn.NormStabilizer())
     modelConfig.embedder = nn.LookupTable(vocabSize, opt.rnnSize)
     modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 end
