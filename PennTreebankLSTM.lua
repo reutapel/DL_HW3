@@ -88,7 +88,7 @@ else
     local rnn = rnnTypes[opt.model]
     local hiddenSize = opt.rnnSize
     modelConfig.recurrent = nn.Sequential()
-    modelConfig.recurrent:add(Linear(1,hiddenSize))
+    modelConfig.recurrent:add(nn.Linear(1,hiddenSize))
     for i=1, opt.numLayers do
       modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
      -- modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
