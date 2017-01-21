@@ -98,7 +98,6 @@ else
       end
       hiddenSize = opt.rnnSize
     end
-    modelConfig.recurrent:add(nn.NormStabilizer())
     modelConfig.embedder = nn.LookupTable(vocabSize, opt.rnnSize)
     modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 end
