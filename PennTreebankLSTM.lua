@@ -1,5 +1,6 @@
 require 'torch'
 require 'nn'
+require 'cudnn'
 require 'optim'
 require 'eladtools'
 require 'recurrent'
@@ -100,6 +101,7 @@ else
     modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 end
 
+modelConfig:cuda()
 w, dE_dw = modelConfig:getParameters()
 print('Number of parameters:', w:nElement())
 print(modelConfig)
