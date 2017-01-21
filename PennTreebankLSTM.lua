@@ -1,6 +1,5 @@
 require 'torch'
 require 'nn'
---require 'cudnn'
 require 'optim'
 require 'eladtools'
 require 'recurrent'
@@ -100,11 +99,6 @@ else
     modelConfig.embedder = nn.LookupTable(vocabSize, opt.rnnSize)
     modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 end
-
---modelConfig:cuda()
---w, dE_dw = modelConfig:getParameters()
---print('Number of parameters:', w:nElement())
---print(modelConfig)
 
 modelConfig.classifier:share(modelConfig.embedder, 'weight', 'gradWeight')
 local trainingConfig = require './trainRecurrent'
