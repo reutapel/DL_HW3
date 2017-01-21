@@ -1,6 +1,6 @@
 require 'torch'
 require 'nn'
-require 'cudnn'
+--require 'cudnn'
 require 'optim'
 require 'eladtools'
 require 'recurrent'
