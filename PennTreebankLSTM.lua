@@ -107,7 +107,7 @@ end
 --print(modelConfig)
 
 modelConfig.classifier:share(modelConfig.embedder, 'weight', 'gradWeight')
-local trainingConfig = require 'utils.trainRecurrent'
+local trainingConfig = require './trainRecurrent'
 local train = trainingConfig.train
 local evaluate = trainingConfig.evaluate
 local sample = trainingConfig.sample
