@@ -19,7 +19,7 @@ cmd:option('-shuffle',            false,                       'shuffle training
 cmd:text('===>Model And Training Regime')
 cmd:option('-model',              'LSTM',                      'Recurrent model [RNN, iRNN, LSTM, GRU]')
 cmd:option('-seqLength',          10,                          'number of timesteps to unroll for')
-cmd:option('-rnnSize',            128,                         'size of rnn hidden layer')
+cmd:option('-rnnSize',            220,                         'size of rnn hidden layer')
 cmd:option('-numLayers',          2,                           'number of layers in the LSTM')
 cmd:option('-dropout',            0,                           'dropout p value')
 cmd:option('-LR',                 2e-4,                        'learning rate')
