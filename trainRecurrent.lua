@@ -256,7 +256,7 @@ local function sample(str, num, space, temperature)
         wordNum = smp(pred)
         print('\nwordNum is: ' .. wordNum)
         predText = str .. '... ' .. decoder[wordNum:squeeze()]
-        print('\predText is: ' .. predText)
+        print('\npredText is: ' .. predText)
     else
         wordNum = torch.Tensor(1):random(vocabSize):type(TensorType)
         predText = ''
@@ -269,12 +269,12 @@ local function sample(str, num, space, temperature)
         print('\nwordNum2 loop line 265: ' .. wordNum)
         if space then
             predText = predText .. ' ' .. decoder[wordNum:squeeze()]
-            print('\predText2 is: ' .. predText)
+            print('\npredText2 is: ' .. predText)
         else
             predText = predText .. decoder[wordNum:squeeze()]
         end
     end
-    print('\final predText line 277 is: ' .. predText)
+    print('\nfinal predText line 277 is: ' .. predText)
     return predText
 end
 return {
