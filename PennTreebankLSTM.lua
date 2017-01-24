@@ -18,7 +18,7 @@ cmd:option('-shuffle',            false,                       'shuffle training
 
 cmd:text('===>Model And Training Regime')
 cmd:option('-model',              'LSTM',                      'Recurrent model [RNN, iRNN, LSTM, GRU]')
-cmd:option('-seqLength',          10,                          'number of timesteps to unroll for')
+cmd:option('-seqLength',          50,                          'number of timesteps to unroll for')
 cmd:option('-rnnSize',            220,                         'size of rnn hidden layer')
 cmd:option('-numLayers',          2,                           'number of layers in the LSTM')
 cmd:option('-dropout',            0,                           'dropout p value')
@@ -26,10 +26,10 @@ cmd:option('-LR',                 2e-4,                        'learning rate')
 cmd:option('-LRDecay',            0,                           'learning rate decay (in # samples)')
 cmd:option('-weightDecay',        0,                           'L2 penalty on the weights')
 cmd:option('-momentum',           0,                           'momentum')
-cmd:option('-batchSize',          50,                          'batch size')
+cmd:option('-batchSize',          8,                           'batch size')
 cmd:option('-decayRate',          2,                           'exponential decay rate')
 cmd:option('-initWeight',         0.08,                        'uniform weight initialization range')
-cmd:option('-earlyStop',          1000,                         'number of bad epochs to stop after')
+cmd:option('-earlyStop',          1000,                        'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
 cmd:option('-epoch',              1000,                         'number of epochs to train')
@@ -98,7 +98,7 @@ else
       hiddenSize = opt.rnnSize
     end
     --modelConfig.recurrent:add(nn.NormStabilizer())
-    modelConfig.recurrent:add(nn.HardTanh())
+    --modelConfig.recurrent:add(nn.HardTanh())
     modelConfig.embedder = nn.LookupTable(vocabSize, opt.rnnSize)
     modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 end
@@ -152,3 +152,4 @@ until stopTraining:update(LossVal)
 local lowestLoss, bestIteration = stopTraining:lowest()
 
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
+log:add{['Best Iteration wa']= bestIteration, ['With a validation loss of'] = lowestLoss}
