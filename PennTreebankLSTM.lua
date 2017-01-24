@@ -29,10 +29,10 @@ cmd:option('-momentum',           0,                           'momentum')
 cmd:option('-batchSize',          8,                           'batch size')
 cmd:option('-decayRate',          2,                           'exponential decay rate')
 cmd:option('-initWeight',         0.08,                        'uniform weight initialization range')
-cmd:option('-earlyStop',          1000,                        'number of bad epochs to stop after')
+cmd:option('-earlyStop',          1,                        'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
-cmd:option('-epoch',              1000,                         'number of epochs to train')
+cmd:option('-epoch',              1,                         'number of epochs to train')
 cmd:option('-epochDecay',         25,                           'number of epochs to start decay learning rate')
 
 cmd:text('===>Platform Optimization')
@@ -116,6 +116,9 @@ local log = optim.Logger(logFilename)
 local decreaseLR = EarlyStop(1,opt.epochDecay)
 local stopTraining = EarlyStop(opt.earlyStop, opt.epoch)
 local epoch = 1
+TrainPerplexity = torch.Tensor(opt.epoch)
+TestPerplexity = torch.Tensor(opt.epoch)
+ValPerplexity = torch.Tensor(opt.epoch)
 
 repeat
   print('\nEpoch ' .. epoch ..'\n')
@@ -135,6 +138,11 @@ repeat
   --print('\nSampled Text:\n' .. sample('the meaning of life is', 50, true))
 
   print('\nTest Perplexity: ' .. torch.exp(LossTest))
+  
+  TrainPerplexity[epoch] = torch.exp(LossTrain)
+  TestPerplexity[epoch] = torch.exp(LossTest)
+  ValPerplexity[epoch] = torch.exp(LossVal)
+  
   log:add{['Training Loss']= LossTrain, ['Validation Loss'] = LossVal, ['Test Loss'] = LossTest}
   log:style{['Training Loss'] = '-', ['Validation Loss'] = '-', ['Test Loss'] = '-'}
   log:plot()
@@ -153,3 +161,12 @@ local lowestLoss, bestIteration = stopTraining:lowest()
 
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
 log:add{['Best Iteration wa']= bestIteration, ['With a validation loss of'] = lowestLoss}
+
+require 'gnuplot'
+local plotFile = paths.concat(opt.save,'TestPerplexity.png')
+local range = torch.range(1, epoch - 1)
+gnuplot.pngfigure(plotFile)
+gnuplot.plot({'TestPerplexity',TestPerplexity},{'TrainPerplexity',TrainPerplexity}, {'ValPerplexity',ValPerplexity})
+gnuplot.xlabel('epochs')
+gnuplot.ylabel('Perplexity')
+gnuplot.plotflush()
