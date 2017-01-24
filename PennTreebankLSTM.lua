@@ -160,9 +160,9 @@ until stopTraining:update(LossVal)
 local lowestLoss, bestIteration = stopTraining:lowest()
 
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
-log:add{['Best Iteration was']= bestIteration, ['With a validation loss of'] = lowestLoss}
-log:style{['Best Iteration was'] = '-', ['With a validation loss of'] = '-'}
-log:plot()
+--log:add{['Best Iteration was']= bestIteration, ['With a validation loss of'] = lowestLoss}
+--log:style{['Best Iteration was'] = '-', ['With a validation loss of'] = '-'}
+--log:plot()
 
 require 'gnuplot'
 local plotFile = paths.concat(opt.save,'TestPerplexity.png')
