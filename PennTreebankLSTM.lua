@@ -46,7 +46,7 @@ cmd:option('-constBatchSize',     false,                       'do not allow var
 cmd:text('===>Save/Load Options')
 cmd:option('-bestEpoch',          1,                           'epoch with the best test perplexity')
 cmd:option('-load',               '',                          'load existing net weights')
-cmd:option('-save',               os.date():gsub(' ','')       'save directory')    
+cmd:option('-save',               os.date():gsub(' ',''),      'save directory') 
 cmd:option('-optState',           false,                       'Save optimization state every epoch')
 cmd:option('-checkpoint',         0,                           'Save a weight check point every n samples. 0 for off')
 
