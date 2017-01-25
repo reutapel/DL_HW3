@@ -54,9 +54,11 @@ cmd:option('-checkpoint',         0,                           'Save a weight ch
 
 opt = cmd:parse(arg or {})
 opt.save = paths.concat('./Results', opt.save)
-temp = paths.concat(opt.save, '/Net_')
-temp = paths.concat(temp, opt.bestEpoch)
+bestModel = ('/Net_' .. opt.bestEpoch)
+print(bestModel)
+temp = paths.concat(opt.save,bestModel)
 opt.load = paths.concat(temp, '.t7')
+print(opt.load)
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 torch.setdefaulttensortype('torch.FloatTensor')
@@ -141,6 +143,8 @@ repeat
   end
   
   if epoch > 1 then
+    print(TestPerplexity[epoch])
+    print(opt.bestEpoch)
     if (TestPerplexity[epoch] < opt.bestEpoch) then
       opt.bestEpoch = TestPerplexity[epoch]
       saveModel(opt.bestEpoch)
