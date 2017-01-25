@@ -27,7 +27,7 @@ local model = nn.Sequential()
 model:add(embedder)
 model:add(recurrent)
 model:add(nn.TemporalModule(classifier))
-local criterion = nn.MSECriterion()--:cuda()--ClassNLLCriterion()
+local criterion = nn.MSECriterion():cuda()--ClassNLLCriterion()
 
 local TensorType = 'torch.FloatTensor'
 
