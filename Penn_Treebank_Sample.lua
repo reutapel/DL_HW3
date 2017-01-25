@@ -168,7 +168,7 @@ if paths.filep(opt.load) then
     numOfSentences = 5
     for i=1, numOfSentences do
       print('\nSampled Text:\n' .. sample('Buy low, sell high is the', 5, true))
-    
+    end
     
 
 require 'gnuplot'
