@@ -163,14 +163,14 @@ print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " 
 
 opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
 print(opt.load)
-BestmodelConfig = torch.load(opt.load)
-BestmodelConfig.classifier:share(BestmodelConfig.embedder, 'weight', 'gradWeight')
-local BestTrainingConfig = require './trainRecurrent'
-local train = BestTrainingConfig.train
-local evaluate = BestTrainingConfig.evaluate
-local sample = BestTrainingConfig.sample
-local optimState = BestTrainingConfig.optimState
-local saveModel = BestTrainingConfig.saveModel
+modelConfig = torch.load(opt.load)
+--BestmodelConfig.classifier:share(BestmodelConfig.embedder, 'weight', 'gradWeight')
+--local BestTrainingConfig = require './trainRecurrent'
+--local train = BestTrainingConfig.train
+--local evaluate = BestTrainingConfig.evaluate
+--local sample = BestTrainingConfig.sample
+--local optimState = BestTrainingConfig.optimState
+--local saveModel = BestTrainingConfig.saveModel
 print('==>Loaded Net from: ' .. opt.load)
 numOfSentences = 5
 for i=1, numOfSentences do
