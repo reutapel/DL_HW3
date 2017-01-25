@@ -14,7 +14,7 @@ cmd:text()
 cmd:text('==>Options')
 
 cmd:text('===>Data Options')
-cmd:option('-shuffle',            true,                       'shuffle training samples')
+cmd:option('-shuffle',            false,                       'shuffle training samples')
 
 cmd:text('===>Model And Training Regime')
 cmd:option('-model',              'LSTM',                      'Recurrent model [RNN, iRNN, LSTM, GRU]')
