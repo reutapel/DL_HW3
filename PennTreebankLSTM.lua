@@ -178,7 +178,9 @@ local saveModel = trainingConfig.saveModel
 print('==>Loaded Net from: ' .. opt.load)
 numOfSentences = 5
 for i=1, numOfSentences do
-  print('\nSampled Text:\n' .. sample('Buy low, sell high is the', 5, true))
+  sentence = sample('Buy low, sell high is the', 5, true)
+  print('\nSampled Text:\n')
+  print(sentence)
 end
 
 --log:add{['Best Iteration was']= bestIteration, ['With a validation loss of'] = lowestLoss}
