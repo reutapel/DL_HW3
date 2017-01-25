@@ -27,7 +27,7 @@ local model = nn.Sequential()
 model:add(embedder)
 model:add(recurrent)
 model:add(nn.TemporalModule(classifier))
-local criterion = nn.CrossEntropyCriterion()--ClassNLLCriterion()
+local criterion = ClassNLLCriterion() -- nn.CrossEntropyCriterion()
 
 local TensorType = 'torch.FloatTensor'
 
