@@ -117,7 +117,8 @@ ValPerplexity = torch.Tensor(opt.epoch)
 repeat
   print('\nEpoch ' .. epoch ..'\n')
   LossTrain = train(data.trainingData)
-  
+  saveModel(epoch)
+    
   print('\nTraining Perplexity: ' .. torch.exp(LossTrain))
 
   local LossVal = evaluate(data.validationData)
@@ -132,20 +133,14 @@ repeat
   TestPerplexity[epoch] = torch.exp(LossTest)
   ValPerplexity[epoch] = torch.exp(LossVal)
   
-  
   if epoch == 1 then
       bestBynow = TestPerplexity[epoch]
-      saveModel(opt.bestEpoch)
-      print(modelConfig)
   end
   
   if epoch > 1 then
-    print(TestPerplexity[epoch])
-    print(bestBynow)
     if (TestPerplexity[epoch] < bestBynow) then
       bestBynow = TestPerplexity[epoch]
       opt.bestEpoch = epoch
-      saveModel(opt.bestEpoch)
     end
   end
   
