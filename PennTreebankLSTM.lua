@@ -145,7 +145,7 @@ repeat
   
   if epoch > 1 then
     print(TestPerplexity[epoch])
-    print(opt.bestEpoch)
+    print(bestBynow)
     if (TestPerplexity[epoch] < bestBynow) then
       bestBynow = TestPerplexity[epoch]
       opt.bestEpoch = epoch
