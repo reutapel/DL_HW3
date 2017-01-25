@@ -162,13 +162,13 @@ print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " 
 --log:style{['Best Iteration was'] = '-', ['With a validation loss of'] = '-'}
 --log:plot()
 
-if paths.filep(opt.load) then
-    modelConfig = torch.load(opt.load)
-    print('==>Loaded Net from: ' .. opt.load)
-    numOfSentences = 5
-    for i=1, numOfSentences do
-      print('\nSampled Text:\n' .. sample('Buy low, sell high is the', 5, true))
-    end
+    
+
+modelConfig = torch.load(opt.load)
+print('==>Loaded Net from: ' .. opt.load)
+numOfSentences = 5
+for i=1, numOfSentences do
+  print('\nSampled Text:\n' .. sample('Buy low, sell high is the', 5, true))
 end
     
 
