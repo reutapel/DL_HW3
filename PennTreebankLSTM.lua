@@ -136,6 +136,7 @@ repeat
   if epoch == 1 then
       bestBynow = TestPerplexity[epoch]
       saveModel(opt.bestEpoch)
+      print(modelConfig)
   end
   
   if epoch > 1 then
