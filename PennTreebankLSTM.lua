@@ -52,9 +52,11 @@ cmd:option('-checkpoint',         0,                           'Save a weight ch
 
 
 
-opt.load = paths.concat('/home/reutapel@st.technion.ac.il/DL_HW3/', opt.save, '/Net_', opt.bestEpoch, '.t7')
 opt = cmd:parse(arg or {})
 opt.save = paths.concat('./Results', opt.save)
+temp = paths.concat(opt.save, '/Net_')
+temp = paths.concat(temp, opt.bestEpoch)
+opt.load = paths.concat(temp, '.t7')
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 torch.setdefaulttensortype('torch.FloatTensor')
