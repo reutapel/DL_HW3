@@ -144,6 +144,21 @@ local function saveModel(epoch)
     collectgarbage()
 end
 
+local function saveBestModel()
+    local fn = 'BestModel.t7'
+    torch.save(fn,
+    {
+        embedder = savedModel.embedder:clone():float(),
+        recurrent = savedModel.recurrent:clone():float(),
+        classifier = savedModel.classifier:clone():float(),
+        inputSize = inputSize,
+        stateSize = stateSize,
+        vocab = vocab,
+        decoder = decoder
+    })
+    collectgarbage()
+end
+
 ----------------------------------------------------------------------
 local function ForwardSeq(dataVec, train)
 
