@@ -170,11 +170,11 @@ print(opt.load)
 BestmodelConfig = torch.load(opt.load)
 BestmodelConfig.classifier:share(BestmodelConfig.embedder, 'weight', 'gradWeight')
 local BestTrainingConfig = require './trainRecurrent'
-local train = BestTrainingConfig.train
-local evaluate = BestTrainingConfig.evaluate
-local sample = BestTrainingConfig.sample
-local optimState = BestTrainingConfig.optimState
-local saveModel = BestTrainingConfig.saveModel
+--local train = BestTrainingConfig.train
+--local evaluate = BestTrainingConfig.evaluate
+--local sample = BestTrainingConfig.sample
+--local optimState = BestTrainingConfig.optimState
+--local saveModel = BestTrainingConfig.saveModel
 print('==>Loaded Net from: ' .. opt.load)
 numOfSentences = 5
 for i=1, numOfSentences do
