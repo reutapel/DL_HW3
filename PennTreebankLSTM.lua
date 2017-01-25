@@ -139,14 +139,16 @@ repeat
   
   
   if epoch == 1 then
+      bestBynow = TestPerplexity[epoch]
       saveModel(opt.bestEpoch)
   end
   
   if epoch > 1 then
     print(TestPerplexity[epoch])
     print(opt.bestEpoch)
-    if (TestPerplexity[epoch] < opt.bestEpoch) then
-      opt.bestEpoch = TestPerplexity[epoch]
+    if (TestPerplexity[epoch] < bestBynow) then
+      bestBynow = TestPerplexity[epoch]
+      opt.bestEpoch = epoch
       saveModel(opt.bestEpoch)
     end
   end
