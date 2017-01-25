@@ -53,7 +53,7 @@ cmd:option('-checkpoint',         0,                           'Save a weight ch
 
 
 opt = cmd:parse(arg or {})
-opt.save = paths.concat('./Results')
+opt.save = paths.concat('./Results', opt.save)
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 torch.setdefaulttensortype('torch.FloatTensor')
