@@ -54,8 +54,6 @@ cmd:option('-checkpoint',         0,                           'Save a weight ch
 
 opt = cmd:parse(arg or {})
 opt.save = paths.concat('./Results', opt.save)
-opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
-print(opt.load)
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 torch.setdefaulttensortype('torch.FloatTensor')
@@ -167,6 +165,8 @@ until stopTraining:update(LossVal)
 local lowestLoss, bestIteration = stopTraining:lowest()
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
 
+opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
+print(opt.load)
 modelConfig = torch.load(opt.load)
 modelConfig.classifier:share(modelConfig.embedder, 'weight', 'gradWeight')
 local trainingConfig = require './trainRecurrent'
