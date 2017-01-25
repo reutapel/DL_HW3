@@ -44,16 +44,15 @@ cmd:option('-seed',               123,                         'torch manual ran
 cmd:option('-constBatchSize',     false,                       'do not allow varying batch sizes')
 
 cmd:text('===>Save/Load Options')
-cmd:option('-bestEpoch',          1,                            'epoch with the best test perplexity')
-cmd:option('-load',               '/home/reutapel@st.technion.ac.il/DL_HW3/' .. opt.save .. '/Net_' .. opt.bestEpoch .. '.t7',
-  'load existing net weights')
+cmd:option('-bestEpoch',          1,                           'epoch with the best test perplexity')
+cmd:option('-load',               '',                          'load existing net weights')
 cmd:option('-save',               os.date()                    'save directory') --:gsub(' ',''),     
 cmd:option('-optState',           false,                       'Save optimization state every epoch')
 cmd:option('-checkpoint',         0,                           'Save a weight check point every n samples. 0 for off')
 
 
 
-
+opt.load = paths.concat('/home/reutapel@st.technion.ac.il/DL_HW3/', opt.save, '/Net_', opt.bestEpoch, '.t7')
 opt = cmd:parse(arg or {})
 opt.save = paths.concat('./Results', opt.save)
 torch.setnumthreads(opt.threads)
