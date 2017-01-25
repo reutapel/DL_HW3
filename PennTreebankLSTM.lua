@@ -54,10 +54,7 @@ cmd:option('-checkpoint',         0,                           'Save a weight ch
 
 opt = cmd:parse(arg or {})
 opt.save = paths.concat('./Results', opt.save)
-bestModel = ('/Net_' .. opt.bestEpoch)
-print(bestModel)
-temp = paths.concat(opt.save,bestModel)
-opt.load = paths.concat(temp, '.t7')
+opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7')
 print(opt.load)
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
