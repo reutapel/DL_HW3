@@ -86,7 +86,7 @@ modelConfig.recurrent = nn.Sequential()
 --modelConfig.recurrent:add(nn.Linear(1,hiddenSize))
 for i=1, opt.numLayers do
   modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
-  modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
+  --modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
   if opt.dropout > 0 then
     modelConfig.recurrent:add(nn.Dropout(opt.dropout))
   end
