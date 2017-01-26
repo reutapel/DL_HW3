@@ -32,7 +32,7 @@ cmd:option('-initWeight',         0.08,                        'uniform weight i
 cmd:option('-earlyStop',          5,                           'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
-cmd:option('-epoch',              50,                           'number of epochs to train')
+cmd:option('-epoch',              25,                           'number of epochs to train')
 cmd:option('-epochDecay',         5,                           'number of epochs to start decay learning rate')
 
 cmd:text('===>Platform Optimization')
@@ -83,17 +83,13 @@ local rnnTypes = {LSTM = nn.LSTM, RNN = nn.RNN, GRU = nn.GRU, iRNN = nn.iRNN}
 local rnn = rnnTypes[opt.model]
 local hiddenSize = opt.rnnSize
 modelConfig.recurrent = nn.Sequential()
---modelConfig.recurrent:add(nn.Linear(1,hiddenSize))
 for i=1, opt.numLayers do
   modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
-  --modelConfig.recurrent:add(nn.BatchNormalization(opt.rnnSize))
   if opt.dropout > 0 then
     modelConfig.recurrent:add(nn.Dropout(opt.dropout))
   end
   hiddenSize = opt.rnnSize
 end
---modelConfig.recurrent:add(nn.NormStabilizer())
---modelConfig.recurrent:add(nn.HardTanh())
 modelConfig.embedder = nn.LookupTable(vocabSize, opt.rnnSize)
 modelConfig.classifier = nn.Linear(opt.rnnSize, vocabSize)
 
@@ -127,13 +123,11 @@ repeat
 
   local LossTest = evaluate(data.testData)
   
-  print('\nSampled Text:\n')
-  print(sample('Buy low, sell high is the', 50, true))
-  if epoch == 2 then
+  if epoch == 25 then
     print('start sampling...')
     numOfSentences = 5
     for i=1, numOfSentences do
-      sentence = sample('Buy low, sell high is the', 50, true)
+      sentence = sample('Buy low, sell high is the', i+10, true)
       print('\nSampled Text:\n')
       print(sentence)
     end
@@ -172,35 +166,6 @@ until stopTraining:update(LossTest)
 
 local lowestLoss, bestIteration = stopTraining:lowest()
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
---print('start sampling...')
---numOfSentences = 5
---for i=1, numOfSentences do
---  sentence = sample('Buy low, sell high is the', 5, true)
---  print('\nSampled Text:\n')
---  print(sentence)
---end
-
---opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
---print(opt.load)
---modelConfig = torch.load(opt.load)
---BestmodelConfig.classifier:share(BestmodelConfig.embedder, 'weight', 'gradWeight')
---local BestTrainingConfig = require './trainRecurrent'
---local train = BestTrainingConfig.train
---local evaluate = BestTrainingConfig.evaluate
---local sample = BestTrainingConfig.sample
---local optimState = BestTrainingConfig.optimState
---local saveModel = BestTrainingConfig.saveModel
---print('==>Loaded Net from: ' .. opt.load)
---numOfSentences = 5
---for i=1, numOfSentences do
-  --sentence = sample('Buy low, sell high is the', 5, true)
-  --print('\nSampled Text:\n')
-  --print(sentence)
---end
-
---log:add{['Best Iteration was']= bestIteration, ['With a validation loss of'] = lowestLoss}
---log:style{['Best Iteration was'] = '-', ['With a validation loss of'] = '-'}
---log:plot()
 
 require 'gnuplot'
 local plotFile = paths.concat(opt.save,'TestPerplexity.png')
