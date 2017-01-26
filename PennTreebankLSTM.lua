@@ -127,6 +127,8 @@ repeat
 
   local LossTest = evaluate(data.testData)
   
+  print('\nSampled Text:\n')
+  print(sample('Buy low, sell high is the', 50, true))
   if epoch == 2 then
     print('start sampling...')
     numOfSentences = 5
