@@ -252,9 +252,12 @@ local function sample(str, num, space, temperature)
             pred = sampleModel:forward(encoded:narrow(1,i,1))
         end
         wordNum = smp(pred)
-        print('/nnext word is: ') 
-        print(decoder[wordNum:squeeze()])
-        predText = str .. '... ' .. decoder[wordNum:squeeze()]
+        --Don't add <ubk> or <eof> to the sentence
+        if decoder[wordNum:squeeze()] != '<unk>' or decoder[wordNum:squeeze()] != '<eof>' then
+           predText = str .. '... ' .. decoder[wordNum:squeeze()]
+        else
+           predText = str
+        end
     else
         wordNum = torch.Tensor(1):random(vocabSize):type(TensorType)
         predText = ''
@@ -263,10 +266,13 @@ local function sample(str, num, space, temperature)
     for i=1, num do
         pred = sampleModel:forward(wordNum)
         wordNum = smp(pred)
-        if space then
-            predText = predText .. ' ' .. decoder[wordNum:squeeze()]
-        else
-            predText = predText .. decoder[wordNum:squeeze()]
+        --Don't add <ubk> or <eof> to the sentence
+        if decoder[wordNum:squeeze()] != '<unk>' or decoder[wordNum:squeeze()] != '<eof>' then
+            if space then
+                predText = predText .. ' ' .. decoder[wordNum:squeeze()]
+            else
+                predText = predText .. decoder[wordNum:squeeze()]
+            end
         end
     end
     return predText
