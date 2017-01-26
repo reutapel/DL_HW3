@@ -32,7 +32,7 @@ cmd:option('-initWeight',         0.08,                        'uniform weight i
 cmd:option('-earlyStop',          5,                           'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
-cmd:option('-epoch',              20,                          'number of epochs to train')
+cmd:option('-epoch',              9,                           'number of epochs to train')
 cmd:option('-epochDecay',         5,                           'number of epochs to start decay learning rate')
 
 cmd:text('===>Platform Optimization')
@@ -144,6 +144,16 @@ repeat
     end
   end
   
+  if epoch == 9 then
+    print('start sampling...')
+    numOfSentences = 5
+    for i=1, numOfSentences do
+      sentence = sample('Buy low, sell high is the', 5, true)
+      print('\nSampled Text:\n')
+      print(sentence)
+    end
+  end
+  
   log:add{['Training Loss']= LossTrain, ['Validation Loss'] = LossVal, ['Test Loss'] = LossTest}
   log:style{['Training Loss'] = '-', ['Validation Loss'] = '-', ['Test Loss'] = '-'}
   log:plot()
@@ -160,13 +170,13 @@ until stopTraining:update(LossTest)
 
 local lowestLoss, bestIteration = stopTraining:lowest()
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
-print('start sampling...')
-numOfSentences = 5
-for i=1, numOfSentences do
-  sentence = sample('Buy low, sell high is the', 5, true)
-  print('\nSampled Text:\n')
-  print(sentence)
- end
+--print('start sampling...')
+--numOfSentences = 5
+--for i=1, numOfSentences do
+--  sentence = sample('Buy low, sell high is the', 5, true)
+--  print('\nSampled Text:\n')
+--  print(sentence)
+--end
 
 --opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
 --print(opt.load)
