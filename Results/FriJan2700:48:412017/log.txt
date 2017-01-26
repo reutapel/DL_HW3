@@ -1,0 +1,243 @@
+2017-01-27 00:48:42 [program started on Fri Jan 27 00:48:42 2017] 
+2017-01-27 00:48:42 [command line arguments] 
+2017-01-27 00:48:42 seed 123 
+2017-01-27 00:48:42 earlyStop 5 
+2017-01-27 00:48:42 initWeight 0.08 
+2017-01-27 00:48:42 batchSize 50 
+2017-01-27 00:48:42 LRDecay 0 
+2017-01-27 00:48:42 numLayers 2 
+2017-01-27 00:48:42 gradClip 5 
+2017-01-27 00:48:42 decayRate 2 
+2017-01-27 00:48:42 model LSTM 
+2017-01-27 00:48:42 constBatchSize false 
+2017-01-27 00:48:42 LR 0.002 
+2017-01-27 00:48:42 epochDecay 5 
+2017-01-27 00:48:42 seqLength 50 
+2017-01-27 00:48:42 load  
+2017-01-27 00:48:42 bestEpoch 1 
+2017-01-27 00:48:42 devid 1 
+2017-01-27 00:48:42 save /home/reutapel@st.technion.ac.il/DL_HW3/Results/FriJan2700:48:412017 
+2017-01-27 00:48:42 epoch 25 
+2017-01-27 00:48:42 checkpoint 0 
+2017-01-27 00:48:42 type cuda 
+2017-01-27 00:48:42 momentum 0 
+2017-01-27 00:48:42 rnnSize 220 
+2017-01-27 00:48:42 weightDecay 0 
+2017-01-27 00:48:42 threads 8 
+2017-01-27 00:48:42 optimization rmsprop 
+2017-01-27 00:48:42 dropout 0.2 
+2017-01-27 00:48:42 shuffle false 
+2017-01-27 00:48:42 optState false 
+2017-01-27 00:48:42 nGPU 1 
+2017-01-27 00:48:42 [----------------------] 
+2017-01-27 00:48:43 
+==> Network 
+2017-01-27 00:48:43 nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> output]
+  (1): nn.LookupTable
+  (2): nn.Sequential {
+    [input -> (1) -> (2) -> (3) -> (4) -> output]
+    (1): nn.LSTM(220 -> 220, 440)
+    (2): nn.Dropout(0.200000)
+    (3): nn.LSTM(220 -> 220, 440)
+    (4): nn.Dropout(0.200000)
+  }
+  (3): nn.TemporalModule {
+    [input -> (1) -> output]
+    (1): nn.Linear(220 -> 10000)
+  }
+} 
+2017-01-27 00:48:43 
+==>2986160 Parameters 
+2017-01-27 00:48:43 
+==> Criterion 
+2017-01-27 00:48:43 nn.CrossEntropyCriterion 
+2017-01-27 00:48:43 
+Epoch 1
+ 
+2017-01-27 00:50:15 
+Training Perplexity: 393.37033081055 
+2017-01-27 00:50:16 
+Validation Perplexity: 244.19584655762 
+2017-01-27 00:50:19 
+Test Perplexity: 230.18531799316 
+2017-01-27 00:50:19 
+Epoch 2
+ 
+2017-01-27 00:51:49 
+Training Perplexity: 201.33558654785 
+2017-01-27 00:51:51 
+Validation Perplexity: 180.42718505859 
+2017-01-27 00:51:53 
+Test Perplexity: 170.37922668457 
+2017-01-27 00:51:53 
+Epoch 3
+ 
+2017-01-27 00:53:24 
+Training Perplexity: 154.71702575684 
+2017-01-27 00:53:26 
+Validation Perplexity: 155.56413269043 
+2017-01-27 00:53:28 
+Test Perplexity: 147.33819580078 
+2017-01-27 00:53:28 
+Epoch 4
+ 
+2017-01-27 00:54:59 
+Training Perplexity: 129.2375793457 
+2017-01-27 00:55:01 
+Validation Perplexity: 139.66239929199 
+2017-01-27 00:55:03 
+Test Perplexity: 132.30386352539 
+2017-01-27 00:55:03 
+Epoch 5
+ 
+2017-01-27 00:56:33 
+Training Perplexity: 112.98890686035 
+2017-01-27 00:56:35 
+Validation Perplexity: 129.52253723145 
+2017-01-27 00:56:37 
+Test Perplexity: 122.75788879395 
+2017-01-27 00:56:37 Learning Rate decreased to: 0.001 
+2017-01-27 00:56:37 
+Epoch 6
+ 
+2017-01-27 00:57:49 
+Training Perplexity: 98.993919372559 
+2017-01-27 00:57:50 
+Validation Perplexity: 122.79026794434 
+2017-01-27 00:57:51 
+Test Perplexity: 116.33728027344 
+2017-01-27 00:57:52 Learning Rate decreased to: 0.0005 
+2017-01-27 00:57:52 
+Epoch 7
+ 
+2017-01-27 00:58:42 
+Training Perplexity: 92.204704284668 
+2017-01-27 00:58:44 
+Validation Perplexity: 119.84304046631 
+2017-01-27 00:58:45 
+Test Perplexity: 113.34143829346 
+2017-01-27 00:58:45 Learning Rate decreased to: 0.00025 
+2017-01-27 00:58:45 
+Epoch 8
+ 
+2017-01-27 00:59:36 
+Training Perplexity: 89.21768951416 
+2017-01-27 00:59:37 
+Validation Perplexity: 118.38205718994 
+2017-01-27 00:59:39 
+Test Perplexity: 112.04907226562 
+2017-01-27 00:59:39 Learning Rate decreased to: 0.000125 
+2017-01-27 00:59:39 
+Epoch 9
+ 
+2017-01-27 01:00:30 
+Training Perplexity: 87.7626953125 
+2017-01-27 01:00:31 
+Validation Perplexity: 117.67669677734 
+2017-01-27 01:00:33 
+Test Perplexity: 111.4412612915 
+2017-01-27 01:00:33 Learning Rate decreased to: 6.25e-05 
+2017-01-27 01:00:33 
+Epoch 10
+ 
+2017-01-27 01:01:24 
+Training Perplexity: 87.089775085449 
+2017-01-27 01:01:25 
+Validation Perplexity: 117.13478088379 
+2017-01-27 01:01:26 
+Test Perplexity: 111.01377868652 
+2017-01-27 01:01:27 Learning Rate decreased to: 3.125e-05 
+2017-01-27 01:01:27 
+Epoch 11
+ 
+2017-01-27 01:02:17 
+Training Perplexity: 86.676475524902 
+2017-01-27 01:02:19 
+Validation Perplexity: 116.89011383057 
+2017-01-27 01:02:20 
+Test Perplexity: 110.79949188232 
+2017-01-27 01:02:20 Learning Rate decreased to: 1.5625e-05 
+2017-01-27 01:02:20 
+Epoch 12
+ 
+2017-01-27 01:03:11 
+Training Perplexity: 86.481452941895 
+2017-01-27 01:03:13 
+Validation Perplexity: 116.7815322876 
+2017-01-27 01:03:14 
+Test Perplexity: 110.6781463623 
+2017-01-27 01:03:14 Learning Rate decreased to: 7.8125e-06 
+2017-01-27 01:03:14 
+Epoch 13
+ 
+2017-01-27 01:04:05 
+Training Perplexity: 86.29126739502 
+2017-01-27 01:04:06 
+Validation Perplexity: 116.71723175049 
+2017-01-27 01:04:08 
+Test Perplexity: 110.61504364014 
+2017-01-27 01:04:08 Learning Rate decreased to: 3.90625e-06 
+2017-01-27 01:04:08 
+Epoch 14
+ 
+2017-01-27 01:04:59 
+Training Perplexity: 86.312622070312 
+2017-01-27 01:05:00 
+Validation Perplexity: 116.69346618652 
+2017-01-27 01:05:02 
+Test Perplexity: 110.59036254883 
+2017-01-27 01:05:02 Learning Rate decreased to: 1.953125e-06 
+2017-01-27 01:05:02 
+Epoch 15
+ 
+2017-01-27 01:05:53 
+Training Perplexity: 86.175758361816 
+2017-01-27 01:05:54 
+Validation Perplexity: 116.67833709717 
+2017-01-27 01:05:56 
+Test Perplexity: 110.57712554932 
+2017-01-27 01:05:56 Learning Rate decreased to: 9.765625e-07 
+2017-01-27 01:05:56 
+Epoch 16
+ 
+2017-01-27 01:06:47 
+Training Perplexity: 86.243881225586 
+2017-01-27 01:06:48 
+Validation Perplexity: 116.671043396 
+2017-01-27 01:06:49 
+Test Perplexity: 110.5705871582 
+2017-01-27 01:06:50 Learning Rate decreased to: 4.8828125e-07 
+2017-01-27 01:06:50 
+Epoch 17
+ 
+2017-01-27 01:07:41 
+Training Perplexity: 86.135459899902 
+2017-01-27 01:07:42 
+Validation Perplexity: 116.66742706299 
+2017-01-27 01:07:43 
+Test Perplexity: 110.56790161133 
+2017-01-27 01:07:44 Learning Rate decreased to: 2.44140625e-07 
+2017-01-27 01:07:44 
+Epoch 18
+ 
+2017-01-27 01:08:35 
+Training Perplexity: 86.229606628418 
+2017-01-27 01:08:36 
+Validation Perplexity: 116.6658706665 
+2017-01-27 01:08:38 
+Test Perplexity: 110.56679534912 
+2017-01-27 01:08:38 Learning Rate decreased to: 1.220703125e-07 
+2017-01-27 01:08:38 
+Epoch 19
+ 
+2017-01-27 01:09:29 
+Training Perplexity: 86.220069885254 
+2017-01-27 01:09:30 
+Validation Perplexity: 116.66520690918 
+2017-01-27 01:09:32 
+Test Perplexity: 110.56621551514 
+2017-01-27 01:09:32 Learning Rate decreased to: 6.103515625e-08 
+2017-01-27 01:09:32 
+Epoch 20
+ 
