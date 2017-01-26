@@ -21,7 +21,7 @@ cmd:option('-model',              'LSTM',                      'Recurrent model 
 cmd:option('-seqLength',          50,                          'number of timesteps to unroll for')
 cmd:option('-rnnSize',            220,                         'size of rnn hidden layer')
 cmd:option('-numLayers',          2,                           'number of layers in the LSTM')
-cmd:option('-dropout',            0.5                         'dropout p value')
+cmd:option('-dropout',            0.5,                         'dropout p value')
 cmd:option('-LR',                 2e-3,                        'learning rate')
 cmd:option('-LRDecay',            0,                           'learning rate decay (in # samples)')
 cmd:option('-weightDecay',        0,                           'L2 penalty on the weights')
