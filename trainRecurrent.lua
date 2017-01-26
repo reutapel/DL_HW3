@@ -252,7 +252,7 @@ local function sample(str, num, space, temperature)
             pred = sampleModel:forward(encoded:narrow(1,i,1))
         end
         wordNum = smp(pred)
-        print('next word is: )
+        print('next word is: ')
         print(decoder[wordNum:squeeze()])
         --Don't add <ubk> or <eof> to the sentence
         if decoder[wordNum:squeeze()] != '<unk>' or decoder[wordNum:squeeze()] != '<eof>' then
@@ -268,7 +268,7 @@ local function sample(str, num, space, temperature)
     for i=1, num do
         pred = sampleModel:forward(wordNum)
         wordNum = smp(pred)
-        print('next word is: )
+        print('next word is: ')
         print(decoder[wordNum:squeeze()])
         --Don't add <ubk> or <eof> to the sentence
         if decoder[wordNum:squeeze()] != '<unk>' or decoder[wordNum:squeeze()] != '<eof>' then
