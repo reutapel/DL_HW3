@@ -126,6 +126,16 @@ repeat
   print('\nValidation Perplexity: ' .. torch.exp(LossVal))
 
   local LossTest = evaluate(data.testData)
+  
+  if epoch == 2 then
+    print('start sampling...')
+    numOfSentences = 5
+    for i=1, numOfSentences do
+      sentence = sample('Buy low, sell high is the', 50, true)
+      print('\nSampled Text:\n')
+      print(sentence)
+    end
+  end
 
   print('\nTest Perplexity: ' .. torch.exp(LossTest))
   
@@ -141,16 +151,6 @@ repeat
     if (TestPerplexity[epoch] < bestBynow) then
       bestBynow = TestPerplexity[epoch]
       opt.bestEpoch = epoch
-    end
-  end
-  
-  if epoch == 2 then
-    print('start sampling...')
-    numOfSentences = 5
-    for i=1, numOfSentences do
-      sentence = sample('Buy low, sell high is the', 50, true)
-      print('\nSampled Text:\n')
-      print(sentence)
     end
   end
   
