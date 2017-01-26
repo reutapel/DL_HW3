@@ -19,9 +19,9 @@ cmd:option('-shuffle',            false,                       'shuffle training
 cmd:text('===>Model And Training Regime')
 cmd:option('-model',              'LSTM',                      'Recurrent model [RNN, iRNN, LSTM, GRU]')
 cmd:option('-seqLength',          50,                          'number of timesteps to unroll for')
-cmd:option('-rnnSize',            220,                         'size of rnn hidden layer')
+cmd:option('-rnnSize',            128,                         'size of rnn hidden layer')
 cmd:option('-numLayers',          2,                           'number of layers in the LSTM')
-cmd:option('-dropout',            0.5,                         'dropout p value')
+cmd:option('-dropout',            0.5,                           'dropout p value')
 cmd:option('-LR',                 2e-3,                        'learning rate')
 cmd:option('-LRDecay',            0,                           'learning rate decay (in # samples)')
 cmd:option('-weightDecay',        0,                           'L2 penalty on the weights')
@@ -32,7 +32,7 @@ cmd:option('-initWeight',         0.08,                        'uniform weight i
 cmd:option('-earlyStop',          5,                           'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
-cmd:option('-epoch',              9,                           'number of epochs to train')
+cmd:option('-epoch',              100,                         'number of epochs to train')
 cmd:option('-epochDecay',         5,                           'number of epochs to start decay learning rate')
 
 cmd:text('===>Platform Optimization')
@@ -44,11 +44,11 @@ cmd:option('-seed',               123,                         'torch manual ran
 cmd:option('-constBatchSize',     false,                       'do not allow varying batch sizes')
 
 cmd:text('===>Save/Load Options')
-cmd:option('-bestEpoch',          1,                           'epoch with the best test perplexity')
 cmd:option('-load',               '',                          'load existing net weights')
-cmd:option('-save',               os.date():gsub(' ',''),      'save directory') 
+cmd:option('-save',               os.date():gsub(' ',''),      'save directory')
 cmd:option('-optState',           false,                       'Save optimization state every epoch')
 cmd:option('-checkpoint',         0,                           'Save a weight check point every n samples. 0 for off')
+
 
 
 
@@ -78,6 +78,7 @@ data = {
 }
 local vocabSize = #decoder
 ----------------------------------------------------------------------
+
 if paths.filep(opt.load) then
     modelConfig = torch.load(opt.load)
     print('==>Loaded Net from: ' .. opt.load)
@@ -89,7 +90,7 @@ else
     modelConfig.recurrent = nn.Sequential()
     for i=1, opt.numLayers do
       modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
-      modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
+     -- modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
       if opt.dropout > 0 then
         modelConfig.recurrent:add(nn.Dropout(opt.dropout))
       end
@@ -145,44 +146,6 @@ repeat
 
 until stopTraining:update(LossVal)
 
-
 local lowestLoss, bestIteration = stopTraining:lowest()
+
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
---print('start sampling...')
---numOfSentences = 5
---for i=1, numOfSentences do
---  sentence = sample('Buy low, sell high is the', 5, true)
---  print('\nSampled Text:\n')
---  print(sentence)
---end
-
---opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
---print(opt.load)
---modelConfig = torch.load(opt.load)
---BestmodelConfig.classifier:share(BestmodelConfig.embedder, 'weight', 'gradWeight')
---local BestTrainingConfig = require './trainRecurrent'
---local train = BestTrainingConfig.train
---local evaluate = BestTrainingConfig.evaluate
---local sample = BestTrainingConfig.sample
---local optimState = BestTrainingConfig.optimState
---local saveModel = BestTrainingConfig.saveModel
---print('==>Loaded Net from: ' .. opt.load)
---numOfSentences = 5
---for i=1, numOfSentences do
-  --sentence = sample('Buy low, sell high is the', 5, true)
-  --print('\nSampled Text:\n')
-  --print(sentence)
---end
-
---log:add{['Best Iteration was']= bestIteration, ['With a validation loss of'] = lowestLoss}
---log:style{['Best Iteration was'] = '-', ['With a validation loss of'] = '-'}
---log:plot()
-
-require 'gnuplot'
-local plotFile = paths.concat(opt.save,'TestPerplexity.png')
-local range = torch.range(1, epoch - 1)
-gnuplot.pngfigure(plotFile)
-gnuplot.plot({'TestPerplexity',TestPerplexity},{'TrainPerplexity',TrainPerplexity})
-gnuplot.xlabel('epochs')
-gnuplot.ylabel('Perplexity')
-gnuplot.plotflush()
