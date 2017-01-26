@@ -29,10 +29,10 @@ cmd:option('-momentum',           0,                           'momentum')
 cmd:option('-batchSize',          50,                          'batch size')
 cmd:option('-decayRate',          2,                           'exponential decay rate')
 cmd:option('-initWeight',         0.08,                        'uniform weight initialization range')
-cmd:option('-earlyStop',          100,                         'number of bad epochs to stop after')
+cmd:option('-earlyStop',          5,                           'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
-cmd:option('-epoch',              1000,                        'number of epochs to train')
+cmd:option('-epoch',              20,                          'number of epochs to train')
 cmd:option('-epochDecay',         5,                           'number of epochs to start decay learning rate')
 
 cmd:text('===>Platform Optimization')
@@ -156,13 +156,19 @@ repeat
     decreaseLR:reset()
   end
 
-until stopTraining:update(LossVal)
+until stopTraining:update(LossTest)
 
 local lowestLoss, bestIteration = stopTraining:lowest()
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
+numOfSentences = 5
+for i=1, numOfSentences do
+  sentence = sample('Buy low, sell high is the', 5, true)
+  print('\nSampled Text:\n')
+  print(sentence)
+ end
 
-opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
-print(opt.load)
+--opt.load = opt.save .. '/Net_' .. opt.bestEpoch .. '.t7'
+--print(opt.load)
 --modelConfig = torch.load(opt.load)
 --BestmodelConfig.classifier:share(BestmodelConfig.embedder, 'weight', 'gradWeight')
 --local BestTrainingConfig = require './trainRecurrent'
@@ -187,7 +193,7 @@ require 'gnuplot'
 local plotFile = paths.concat(opt.save,'TestPerplexity.png')
 local range = torch.range(1, epoch - 1)
 gnuplot.pngfigure(plotFile)
-gnuplot.plot({'TestPerplexity',TestPerplexity},{'TrainPerplexity',TrainPerplexity}, {'ValPerplexity',ValPerplexity})
+gnuplot.plot({'TestPerplexity',TestPerplexity},{'TrainPerplexity',TrainPerplexity})
 gnuplot.xlabel('epochs')
 gnuplot.ylabel('Perplexity')
 gnuplot.plotflush()
