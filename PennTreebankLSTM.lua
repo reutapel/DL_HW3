@@ -122,33 +122,8 @@ repeat
   print('\nValidation Perplexity: ' .. torch.exp(LossVal))
 
   local LossTest = evaluate(data.testData)
-  
-  if epoch == 25 then
-    print('start sampling...')
-    numOfSentences = 5
-    for i=1, numOfSentences do
-      sentence = sample('Buy low, sell high is the', i+10, true)
-      print('\nSampled Text:\n')
-      print(sentence)
-    end
-  end
 
   print('\nTest Perplexity: ' .. torch.exp(LossTest))
-  
-  TrainPerplexity[epoch] = torch.exp(LossTrain)
-  TestPerplexity[epoch] = torch.exp(LossTest)
-  ValPerplexity[epoch] = torch.exp(LossVal)
-  
-  if epoch == 1 then
-      bestBynow = TestPerplexity[epoch]
-  end
-  
-  if epoch > 1 then
-    if (TestPerplexity[epoch] < bestBynow) then
-      bestBynow = TestPerplexity[epoch]
-      opt.bestEpoch = epoch
-    end
-  end
   
   log:add{['Training Loss']= LossTrain, ['Validation Loss'] = LossVal, ['Test Loss'] = LossTest}
   log:style{['Training Loss'] = '-', ['Validation Loss'] = '-', ['Test Loss'] = '-'}
@@ -166,6 +141,23 @@ until stopTraining:update(LossTest)
 
 local lowestLoss, bestIteration = stopTraining:lowest()
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
+
+--Generating sentences
+local best_model = opt.save .. "/Net_" .. bestIteration .. ".t7"
+modelConfig = torch.load(best_model)
+print('==>Loaded Net: ' .. best_model)
+modelConfig.classifier:share(modelConfig.embedder, 'weight', 'gradWeight')
+local trainingConfig = require './trainRecurrent'
+local train = trainingConfig.train
+local evaluate = trainingConfig.evaluate
+local sample = trainingConfig.sample
+local optimState = trainingConfig.optimState
+local saveModel = trainingConfig.saveModel
+print('==>Loaded Net from: ' .. opt.load)
+numOfSentences = 5
+for e = 1, numOfSentences do
+	print('\nSampled Text:\n' .. sample('Buy low, sell high is the', i+10, true))
+end
 
 require 'gnuplot'
 local plotFile = paths.concat(opt.save,'TestPerplexity.png')
