@@ -27,7 +27,7 @@ local model = nn.Sequential()
 model:add(embedder)
 model:add(recurrent)
 model:add(nn.TemporalModule(classifier))
-local criterion = nn.CrossEntropyCriterion() --nn.ClassNLLCriterion()
+local criterion = nn.CrossEntropyCriterion()--ClassNLLCriterion()
 
 local TensorType = 'torch.FloatTensor'
 
@@ -144,21 +144,6 @@ local function saveModel(epoch)
     collectgarbage()
 end
 
-local function saveBestModel()
-    local fn = 'BestModel.t7'
-    torch.save(fn,
-    {
-        embedder = savedModel.embedder:clone():float(),
-        recurrent = savedModel.recurrent:clone():float(),
-        classifier = savedModel.classifier:clone():float(),
-        inputSize = inputSize,
-        stateSize = stateSize,
-        vocab = vocab,
-        decoder = decoder
-    })
-    collectgarbage()
-end
-
 ----------------------------------------------------------------------
 local function ForwardSeq(dataVec, train)
 
@@ -259,8 +244,7 @@ local function sample(str, num, space, temperature)
     recurrent:single()
 
     local sampleModel = nn.Sequential():add(embedder):add(recurrent):add(classifier):add(nn.SoftMax():type(TensorType))
-    print(sampleModel)
-    
+
     local pred, predText, embedded
     if str then
         local encoded = data.encode(str)
