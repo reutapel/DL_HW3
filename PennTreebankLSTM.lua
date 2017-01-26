@@ -156,7 +156,7 @@ local saveModel = trainingConfig.saveModel
 print('==>Loaded Net from: ' .. opt.load)
 numOfSentences = 5
 for e = 1, numOfSentences do
-	print('\nSampled Text:\n' .. sample('Buy low, sell high is the', i+10, true))
+	print('\nSampled Text:\n' .. sample('Buy low, sell high is the', e+10, true))
 end
 
 require 'gnuplot'
