@@ -259,6 +259,7 @@ local function sample(str, num, space, temperature)
     recurrent:single()
 
     local sampleModel = nn.Sequential():add(embedder):add(recurrent):add(classifier):add(nn.SoftMax():type(TensorType))
+    print(sampleModel)
     
     local pred, predText, embedded
     if str then
