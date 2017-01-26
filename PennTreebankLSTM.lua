@@ -32,7 +32,7 @@ cmd:option('-initWeight',         0.08,                        'uniform weight i
 cmd:option('-earlyStop',          5,                           'number of bad epochs to stop after')
 cmd:option('-optimization',       'rmsprop',                   'optimization method')
 cmd:option('-gradClip',           5,                           'clip gradients at this value')
-cmd:option('-epoch',              9,                           'number of epochs to train')
+cmd:option('-epoch',              50,                           'number of epochs to train')
 cmd:option('-epochDecay',         5,                           'number of epochs to start decay learning rate')
 
 cmd:text('===>Platform Optimization')
@@ -86,7 +86,7 @@ modelConfig.recurrent = nn.Sequential()
 --modelConfig.recurrent:add(nn.Linear(1,hiddenSize))
 for i=1, opt.numLayers do
   modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
-  modelConfig.recurrent:add(nn.BatchNormalization(opt.rnnSize))
+  --modelConfig.recurrent:add(nn.BatchNormalization(opt.rnnSize))
   if opt.dropout > 0 then
     modelConfig.recurrent:add(nn.Dropout(opt.dropout))
   end
