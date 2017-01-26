@@ -160,6 +160,7 @@ until stopTraining:update(LossTest)
 
 local lowestLoss, bestIteration = stopTraining:lowest()
 print("Best Iteration was " .. bestIteration .. ", With a validation loss of: " .. lowestLoss)
+print('start sampling...')
 numOfSentences = 5
 for i=1, numOfSentences do
   sentence = sample('Buy low, sell high is the', 5, true)
