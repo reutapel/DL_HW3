@@ -89,7 +89,7 @@ else
     modelConfig.recurrent = nn.Sequential()
     for i=1, opt.numLayers do
       modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
-     -- modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
+      modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
       if opt.dropout > 0 then
         modelConfig.recurrent:add(nn.Dropout(opt.dropout))
       end
@@ -100,7 +100,7 @@ else
 end
 
 modelConfig.classifier:share(modelConfig.embedder, 'weight', 'gradWeight')
-local trainingConfig = require 'utils.trainRecurrent'
+local trainingConfig = require './trainRecurrent'
 local train = trainingConfig.train
 local evaluate = trainingConfig.evaluate
 local sample = trainingConfig.sample
@@ -128,7 +128,7 @@ repeat
 
   local LossTest = evaluate(data.testData)
 
-  --print('\nSampled Text:\n' .. sample('the meaning of life is', 50, true))
+  print('\nSampled Text:\n' .. sample('the meaning of life is', 50, true))
 
   print('\nTest Perplexity: ' .. torch.exp(LossTest))
   log:add{['Training Loss']= LossTrain, ['Validation Loss'] = LossVal, ['Test Loss'] = LossTest}
