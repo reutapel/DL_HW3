@@ -255,7 +255,7 @@ local function sample(str, num, space, temperature)
         print('next word is: ')
         print(decoder[wordNum:squeeze()])
         --Don't add <ubk> or <eof> to the sentence
-        if decoder[wordNum:squeeze()] != '<unk>' or decoder[wordNum:squeeze()] != '<eof>' then
+        if (decoder[wordNum:squeeze()] ~= '<unk>' or decoder[wordNum:squeeze()] ~= '<eof>') then
            predText = str .. '... ' .. decoder[wordNum:squeeze()]
         else
            predText = str
@@ -271,7 +271,7 @@ local function sample(str, num, space, temperature)
         print('next word is: ')
         print(decoder[wordNum:squeeze()])
         --Don't add <ubk> or <eof> to the sentence
-        if decoder[wordNum:squeeze()] != '<unk>' or decoder[wordNum:squeeze()] != '<eof>' then
+        if (decoder[wordNum:squeeze()] ~= '<unk>' or decoder[wordNum:squeeze()] ~= '<eof>') then
             if space then
                 predText = predText .. ' ' .. decoder[wordNum:squeeze()]
             else
