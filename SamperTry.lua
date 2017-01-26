@@ -44,6 +44,7 @@ cmd:option('-seed',               123,                         'torch manual ran
 cmd:option('-constBatchSize',     false,                       'do not allow varying batch sizes')
 
 cmd:text('===>Save/Load Options')
+cmd:option('-bestEpoch',          1,                           'epoch with the best test perplexity')
 cmd:option('-load',               '',                          'load existing net weights')
 cmd:option('-save',               os.date():gsub(' ',''),      'save directory')
 cmd:option('-optState',           false,                       'Save optimization state every epoch')
@@ -90,7 +91,7 @@ else
     modelConfig.recurrent = nn.Sequential()
     for i=1, opt.numLayers do
       modelConfig.recurrent:add(rnn(hiddenSize, opt.rnnSize, opt.initWeight))
-     -- modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
+      modelConfig.recurrent:add(nn.TemporalModule(nn.BatchNormalization(opt.rnnSize)))
       if opt.dropout > 0 then
         modelConfig.recurrent:add(nn.Dropout(opt.dropout))
       end
